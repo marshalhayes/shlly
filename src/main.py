@@ -19,10 +19,10 @@ def main():
 
 
 if __name__ == "__main__":
-    while True:
-        # exit on keyboard interrupt (ctrl + c)
-        signal.signal(signal.SIGINT, _keyboard_interrupt)
+    # exit on keyboard interrupt (ctrl + c)
+    signal.signal(signal.SIGINT, _keyboard_interrupt)
 
+    while True:
         # collect input and trim trailing whitespace
         command = raw_input(PS1).strip().split('\n')[0].split()
         print(command)
