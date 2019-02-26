@@ -11,35 +11,38 @@ A simple (_and extremely limited_) UNIX shell implemented in Python
 
 1. Download the binary executable for your system
 
-   - Darwin ([download](https://raw.github.com/marshalhayes/shlly/dist/darwin/shlly)):
+   - Darwin ([download](https://github.com/marshalhayes/shlly/blob/master/dist/darwin/shlly)):
 
      ```
      $ curl -O https://raw.github.com/marshalhayes/shlly/dist/darwin/shlly
      ```
 
-   - Linux ([download](https://raw.github.com/marshalhayes/shlly/dist/linux/shlly)):
+   - Linux ([download](https://github.com/marshalhayes/shlly/blob/master/dist/linux/shlly)):
 
      ```
      $ curl -O https://raw.github.com/marshalhayes/shlly/dist/linux/shlly
      ```
 
-   - Windows ([download](https://raw.github.com/marshalhayes/shlly/dist/win/shlly)):
+   - Windows ([download](https://github.com/marshalhayes/shlly/blob/master/dist/win/shlly)):
 
      ```
      $ curl -O https://raw.github.com/marshalhayes/shlly/dist/win/shlly
      ```
 
-2. Run the executable
+2. Run the executable through the command line. Alternatively, simply double click the file.
 
    ```
+   $ cd <path to the where shlly downloaded>
    $ ./shlly
    ```
 
    If you receive a permissions-related error message, you may need to add the execute permission to the file. On UNIX-based systems like macOS and Linux, this can be done with the following command.
 
    ```
-   $ sudo chmod +x dist/shlly
+   $ sudo chmod +x shlly
    ```
+
+   On Windows, you may be able to right-click the file and choose `Run as Administrator`.
 
 ### Building from Source
 
