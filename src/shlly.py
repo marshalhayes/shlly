@@ -53,10 +53,16 @@ def parse_command(command):
         for history in HISTORY:
             print(history)
     elif prog == "cd":
-        # chdir sys call to change path
-        if args[0] == '-':
-            args[0] = PREV_DIR or os.getcwd()
-        path = os.path.normpath(args[0])
+        if args:
+            # chdir sys call to change path
+            if args[0] == '-':
+                args[0] = PREV_DIR or os.getcwd()
+            elif args[0][0] == '~':
+                # if the user uses ~ to specify home directory, find the
+                # home directory from the path variable $HOME
+                args[0] = args[0].replace('~', os.environ["HOME"])
+        # if no path is given as an argument to cd, change directory to $HOME
+        path = os.path.normpath(args[0] if args else os.environ["HOME"])
         os.chdir(path)
     else:
         try:
