@@ -3,8 +3,23 @@
 import os
 import sys
 import signal
+import time
 
 PS1 = "%s :: ~> " % os.getcwd()
+
+def new_process(command):
+    # fork new process
+    proc_id = os.fork()
+
+    # replace memory space with user program
+    if proc_id == 0:
+        # replace memory space
+        os.execlp(command[0], command[0], command[1:])
+    elif proc_id < 0:
+        print("ERROR: Fork failed!") # Fork failed
+    else:
+        print(proc_id)
+        time.sleep(None)
 
 def parse_command(command):
     """
@@ -21,10 +36,10 @@ def parse_command(command):
 def main():
     pass
 
-
 if __name__ == "__main__":
-    
+
     while True:
         # collect input and trim trailing whitespace
         command = input(PS1).strip().split('\n')[0].split()
+        new_process(command)
         parse_command(command)
