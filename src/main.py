@@ -7,6 +7,7 @@ import sys
 import time
 
 HISTORY = []
+PREV_DIR = None
 
 
 def update_history(command):
@@ -56,10 +57,9 @@ def parse_command(command):
     elif prog == "cd":
         # chdir sys call to change path
         if args[0] == '-':
-            print("Not implemented yet")
-        else:
-            path = os.path.normpath(args[0])
-            os.chdir(path)
+            args[0] = PREV_DIR or os.getcwd()
+        path = os.path.normpath(args[0])
+        os.chdir(path)
     else:
         try:
             new_process(prog, args)
@@ -75,11 +75,15 @@ def main():
 if __name__ == "__main__":
     while True:
         try:
-            PS1 = "%s ::~> " % os.getcwd()  # prompt
+            CURR_DIR = os.getcwd()
+            PS1 = "%s ::~> " % CURR_DIR  # prompt
+
             # collect input and trim trailing whitespace
             command = input(PS1).strip().split('\n')[0].split()
             parse_command(command)
             update_history(command)
+
+            PREV_DIR = CURR_DIR
         except (KeyboardInterrupt, EOFError):
             # On keyboard interrupt (ctrl-c and EOF (ctrl-d)), exit the program cleanly
             print(
