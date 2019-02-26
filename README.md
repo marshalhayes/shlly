@@ -49,15 +49,20 @@ There are many ways to build Python code to executable binaries, but we used the
    ```
    $ pip install pyinstaller
    ```
-2. Build the source code to one executable
+2. Download the repository
+   ```
+   $ git clone https://github.com/marshalhayes/shlly
+   ```
+3. Build the source code to one executable
 
    ```
+   $ cd shlly
    $ pyinstaller --onefile src/shlly.py
    ```
 
    Two directories `dist` and `build` will be created (if they don't already exist), along with a `.spec` file. The executable exists in the `dist` directory and can only be run on the system architecture it was built on. For example, if the binary was built on macOS, it cannot be executed on Linux or Windows and vice versa.
 
-3. Run the executable
+4. Run the executable
 
    ```
    $ cd dist
