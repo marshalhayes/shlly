@@ -4,6 +4,9 @@ A simple (_and extremely limited_) UNIX shell implemented in Python
 
 ## Getting Started
 
+- [Running the Shell](#Running-the-Shell)
+- [Building from Source](#Building-from-Source)
+
 ### Running the Shell
 
 1. Download the binary executable for your system
