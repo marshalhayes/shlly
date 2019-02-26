@@ -87,6 +87,7 @@ if __name__ == "__main__":
             PS1 = "%s ::~> " % CURR_DIR  # prompt
 
             # collect input and trim trailing whitespace
+            # TODO: we should split on spaces, but not spaces inside quotes
             command = input(PS1).strip().split('\n')[0].split()
             parse_command(command)
             update_history(command)
