@@ -42,6 +42,7 @@ def parse_command(command):
         Parse a command
         @param: command: a list of program and flags
     """
+    global PREV_DIR
     if len(command) == 0:
         return
 
@@ -53,17 +54,19 @@ def parse_command(command):
         for history in HISTORY:
             print(history)
     elif prog == "cd":
+        if args:
+            # chdir sys call to change path
+            if args[0] == '-':
+                args[0] = PREV_DIR or os.getcwd()
+            elif args[0][0] == '~':
+                # if the user uses ~ to specify home directory, find the
+                # home directory from the path variable $HOME
+                args[0] = args[0].replace('~', os.environ["HOME"])
+        # if no path is given as an argument to cd, change directory to $HOME
+        path = os.path.normpath(
+            args[0] if args else os.environ["HOME"])
         try:
-            if args:
-                # chdir sys call to change path
-                if args[0] == '-':
-                    args[0] = PREV_DIR or os.getcwd()
-                elif args[0][0] == '~':
-                    # if the user uses ~ to specify home directory, find the
-                    # home directory from the path variable $HOME
-                    args[0] = args[0].replace('~', os.environ["HOME"])
-            # if no path is given as an argument to cd, change directory to $HOME
-            path = os.path.normpath(args[0] if args else os.environ["HOME"])
+            PREV_DIR = os.getcwd()
             os.chdir(path)
         except FileNotFoundError:
             # if the path isn't valid (there is nothing at that location)
@@ -83,16 +86,13 @@ def main():
 if __name__ == "__main__":
     while True:
         try:
-            CURR_DIR = os.getcwd()
-            PS1 = "%s ::~> " % CURR_DIR  # prompt
+            PS1 = "%s ::~> " % os.getcwd()  # prompt
 
             # collect input and trim trailing whitespace
             # TODO: we should split on spaces, but not spaces inside quotes
             command = input(PS1).strip().split('\n')[0].split()
             parse_command(command)
             update_history(command)
-
-            PREV_DIR = CURR_DIR
         except (KeyboardInterrupt, EOFError):
             # On keyboard interrupt (ctrl-c and EOF (ctrl-d)), exit the program cleanly
             print(
