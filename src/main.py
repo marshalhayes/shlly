@@ -1,8 +1,5 @@
-#! /usr/local/bin/python3
-
 import os
 import sys
-import signal
 
 PS1 = "%s :: ~> " % os.getcwd()
 COMMANDS = {
@@ -31,6 +28,7 @@ def parse_command(command):
     """
     prog, args = command[0], command[1:]
     if prog == "exit":
+        print("\n\nThanks for using shlly! Fork our project at https://github.com/marshalhayes/shlly.\n")
         sys.exit(0)
     return
 
