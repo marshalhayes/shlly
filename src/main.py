@@ -1,26 +1,35 @@
-#! /usr/bin/python
-
-from __future__ import print_function
+#! /usr/local/bin/python3
 
 import os
 import sys
 import signal
 
 PS1 = "%s :: ~> " % os.getcwd()
+COMMANDS = {
+    "cd",
+    "pwd",
+    "stat",
+    "exit"
+}
+HISTORY = "/tmp/history.txt"
 
 
-def _keyboard_interrupt(signum, frame):
-    print("\n\nThanks for using shlly! Fork our project at https://github.com/marshalhayes/shlly.\n")
-    sys.exit(0)
+def update_history(command):
+    """
+        Updates the history file
+        @param: command: a list of program and flags
+    """
+    with open(HISTORY, 'w') as f:
+        str_command = "".join(command)
+        f.write(str_command)
 
 
 def parse_command(command):
     """
         Parse a command
-
-        command: a list of program and flags
+        @param: command: a list of program and flags
     """
-    prog = command[0]
+    prog, args = command[0], command[1:]
     if prog == "exit":
         sys.exit(0)
     return
@@ -31,10 +40,8 @@ def main():
 
 
 if __name__ == "__main__":
-    # exit on keyboard interrupt (ctrl + c)
-    signal.signal(signal.SIGINT, _keyboard_interrupt)
-
     while True:
         # collect input and trim trailing whitespace
-        command = raw_input(PS1).strip().split('\n')[0].split()
+        command = input(PS1).strip().split('\n')[0].split()
         parse_command(command)
+        update_history(command)
