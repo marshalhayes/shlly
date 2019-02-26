@@ -1,3 +1,7 @@
+#! /usr/local/bin/python3
+
+from datetime import datetime
+
 import os
 import sys
 
@@ -8,17 +12,17 @@ COMMANDS = {
     "stat",
     "exit"
 }
-HISTORY = "/tmp/history.txt"
+HISTORY = []
 
 
 def update_history(command):
     """
-        Updates the history file
+        Updates the history
         @param: command: a list of program and flags
     """
-    with open(HISTORY, 'w') as f:
-        str_command = "".join(command)
-        f.write(str_command)
+    current_time = datetime.now().strftime("%H:%M")
+    str_command = "%s %s" % (current_time, "".join(command))
+    HISTORY.append(str_command)
 
 
 def parse_command(command):
@@ -30,6 +34,9 @@ def parse_command(command):
     if prog == "exit":
         print("\n\nThanks for using shlly! Fork our project at https://github.com/marshalhayes/shlly.\n")
         sys.exit(0)
+    elif prog == "stat":
+        for history in HISTORY:
+            print(history)
     return
 
 
