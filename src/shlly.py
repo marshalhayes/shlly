@@ -2,7 +2,6 @@ from datetime import datetime
 
 import os
 import sys
-import time
 
 HISTORY = []
 PREV_DIR = None
@@ -34,7 +33,8 @@ def new_process(prog, args):
     elif proc_id < 0:
         print("ERROR: Fork failed!")  # Fork failed
     else:
-        time.sleep(0.01)
+        # wait for the child process to complete
+        os.waitpid(proc_id, 0)
 
 
 def parse_command(command):
@@ -53,17 +53,21 @@ def parse_command(command):
         for history in HISTORY:
             print(history)
     elif prog == "cd":
-        if args:
-            # chdir sys call to change path
-            if args[0] == '-':
-                args[0] = PREV_DIR or os.getcwd()
-            elif args[0][0] == '~':
-                # if the user uses ~ to specify home directory, find the
-                # home directory from the path variable $HOME
-                args[0] = args[0].replace('~', os.environ["HOME"])
-        # if no path is given as an argument to cd, change directory to $HOME
-        path = os.path.normpath(args[0] if args else os.environ["HOME"])
-        os.chdir(path)
+        try:
+            if args:
+                # chdir sys call to change path
+                if args[0] == '-':
+                    args[0] = PREV_DIR or os.getcwd()
+                elif args[0][0] == '~':
+                    # if the user uses ~ to specify home directory, find the
+                    # home directory from the path variable $HOME
+                    args[0] = args[0].replace('~', os.environ["HOME"])
+            # if no path is given as an argument to cd, change directory to $HOME
+            path = os.path.normpath(args[0] if args else os.environ["HOME"])
+            os.chdir(path)
+        except FileNotFoundError:
+            # if the path isn't valid (there is nothing at that location)
+            print("ERROR: File %s not found" % path)
     else:
         try:
             new_process(prog, args)
