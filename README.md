@@ -23,12 +23,6 @@ A simple (_and extremely limited_) UNIX shell implemented in Python
      $ curl -O https://raw.github.com/marshalhayes/shlly/dist/linux/shlly
      ```
 
-   - Windows ([download](https://github.com/marshalhayes/shlly/blob/master/dist/win/shlly)):
-
-     ```
-     $ curl -O https://raw.github.com/marshalhayes/shlly/dist/win/shlly
-     ```
-
 2. Run the executable through the command line. Alternatively, simply double click the file.
 
    ```
@@ -41,8 +35,6 @@ A simple (_and extremely limited_) UNIX shell implemented in Python
    ```
    $ sudo chmod +x shlly
    ```
-
-   On Windows, you may be able to right-click the file and choose `Run as Administrator`.
 
 ### Building from Source
 
