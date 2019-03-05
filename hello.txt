@@ -1,7 +1,0 @@
-README.md
-assignment.pdf
-build
-dist
-hello.txt
-shlly.spec
-src
