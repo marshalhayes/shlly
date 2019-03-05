@@ -2,6 +2,8 @@
 
 A simple (_and extremely limited_) UNIX shell implemented in Python
 
+Implemented by Marshal Hayes and Xia Fang in COMP 4270 at The University of Memphis.
+
 ## Getting Started
 
 - [Running the Shell](#Running-the-Shell)
@@ -36,6 +38,10 @@ A simple (_and extremely limited_) UNIX shell implemented in Python
    $ sudo chmod +x shlly
    ```
 
+**If you're unable to use the executable, you can just run Shlly with `python`.**
+
+`python src/shlly.py`
+
 ### Building from Source
 
 There are many ways to build Python code to executable binaries, but we used the popular `pyinstaller` module to do so. To build from source:
@@ -63,3 +69,17 @@ There are many ways to build Python code to executable binaries, but we used the
    $ cd dist
    $ ./shlly
    ```
+
+## What Shlly Supports
+
+- Plain-old programs: Basically any program that you'd execute through a command line interface can be executed through Shlly.
+- Pipes: Shlly supports three different pipes (`<`, `|`, and `>`). These pipes can only be used between two programs. For example, `ls -aG | grep Documents` would be valid, but `ls -aG | grep Documents | less` wouldn't be.
+- History: We have a basic, custom implementation of `stat` that tracks command history over the current session only. If you close Shlly, the history is destroyed.
+
+## What Shlly Can't Do
+
+- Subshells: `$(...)`
+- Multiple commands per line (using `;`): Multiple commands per line seperated with semicolons is not supported. Run each command seperately. Pipes, however, are supported.
+- `~` that doesn't refer to `$HOME`: Anywhere that `~` occurs will be replaced with the `$HOME` environment variable. That means that you can't use it for anything else.
+- String input: Enter all input without using quotes. If your program or filepath contains spaces, you're out of luck.
+- Basically anything else
